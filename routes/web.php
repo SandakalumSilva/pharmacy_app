@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,3 +19,14 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+Route::controller(CategoryController::class)->group(function () {
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/all/category', 'allCategory')->name('all.category');
+        Route::get('/add/category', 'addCategory')->name('add.category');
+        Route::post('/store/category','storeCategory')->name('store.category');
+        Route::get('/edit/category/{id}','editCategory')->name('edit.category');
+        Route::post('/update/category','updateCategory')->name('update.category');
+        Route::get('/delete/category/{id}','deleteCategory')->name('delete.category');
+    });
+});
