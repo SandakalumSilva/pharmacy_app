@@ -11,7 +11,7 @@
             <li class="dropdown active">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
                 <ul class="dropdown-menu">
-                    <li class=active><a class="nav-link" href="{{route('dashboard')}}">General Dashboard</a></li>
+                    <li class=active><a class="nav-link" href="{{ route('dashboard') }}">General Dashboard</a></li>
                 </ul>
             </li>
             <li class="menu-header">Starter</li>
@@ -19,18 +19,34 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Category</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="{{route('all.category')}}">All Category</a></li>
+                    <li><a class="nav-link" href="{{ route('all.category') }}">All Category</a></li>
                 </ul>
             </li>
-            <li><a class="nav-link" href=""><i class="far fa-square"></i> <span>Blank
-                        Page</span></a></li>
+
             <li class="dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i>
-                    <span>Bootstrap</span></a>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
+                    <span>Products</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="">Alert</a></li>
+                    <li><a class="nav-link" href="{{ route('all.product') }}">All Products</a></li>
                 </ul>
             </li>
+
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
+                    <span>Suppliers</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="{{ route('all.supplier') }}">All Suppliers</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
+                    <span>Purchase</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="{{ route('all.purchase') }}">All Purchase</a></li>
+                </ul>
+            </li>
+
             <li class="menu-header">Stisla</li>
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i>
