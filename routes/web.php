@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\backend\CategoryController;
+use App\Http\Controllers\backend\ExpenseController;
 use App\Http\Controllers\backend\ProductController;
 use App\Http\Controllers\backend\PurchaseController;
+use App\Http\Controllers\backend\StockController;
 use App\Http\Controllers\backend\SupplierController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -64,5 +67,36 @@ Route::controller(PurchaseController::class)->group(function () {
         Route::get('/edit/purchase/{id}', 'editPurchase')->name('edit.purchase');
         Route::post('/update/purchase', 'updatePurchase')->name('update.purchase');
         Route::get('/delete/purchase/{id}', 'deletePurchase')->name('delete.purchase');
+    });
+});
+
+Route::controller(StockController::class)->group(function () {
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/all/stock', 'allStock')->name('all.stock');
+        Route::post('/search/stock', 'searchStock')->name('stock.search');
+    });
+});
+
+
+Route::controller(ExpenseController::class)->group(function () {
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/all/expense', 'allExpense')->name('all.expense');
+        Route::get('/add/expenses', 'addExpenses')->name('add.expenses');
+        Route::post('/store/expenses', 'storeExpenses')->name('store.expenses');
+        Route::get('/edit/expenses/{id}', 'editExpenses')->name('edit.expenses');
+        Route::post('/update/expenses', 'updateExpenses')->name('update.expenses');
+        Route::get('/delete/expenses/{id}', 'deleteExpenses')->name('delete.expenses');
+        Route::post('/expense/search', 'expenseSearch')->name('expense.search');
+    });
+});
+
+Route::controller(UserController::class)->group(function () {
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/all/users', 'allUsers')->name('all.users');
+        Route::get('/add/user', 'addUser')->name('add.user');
+        Route::post('/store/user', 'storeUser')->name('store.user');
+        Route::get('/edit/user/{id}','editUser')->name('edit.user');
+        Route::post('/update/user','updateUser')->name('update.user');
+        Route::get('/delete/user/{id}', 'deleteUser')->name('delete.user');
     });
 });
