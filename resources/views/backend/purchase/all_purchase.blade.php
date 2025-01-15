@@ -13,18 +13,20 @@
                 <div class="card">
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table table-striped table-md">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Product Name</th>
-                                    <th>Image</th>
-                                    <th>Supplier</th>
-                                    <th>Qty</th>
-                                    <th>Cost Price</th>
-                                    <th>Purchase Date</th>
-                                    <th>Expire Date</th>
-                                    <th>Action</th>
-                                </tr>
+                            <table class="table table-striped table-md" id="table-1">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Product Name</th>
+                                        <th>Image</th>
+                                        <th>Supplier</th>
+                                        <th>Qty</th>
+                                        <th>Cost Price</th>
+                                        <th>Purchase Date</th>
+                                        <th>Expire Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
                                 @foreach ($allPurchase as $key => $purchase)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>

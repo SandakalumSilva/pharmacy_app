@@ -51,6 +51,11 @@ class PurchaseRepository implements PurchaseInterface
                 'created_at' => Carbon::now()
             ]);
 
+            $product = Product::findOrFail($request->productId);
+            $productQty = $product->qty + $request->qty;
+            $product->qty = $productQty;
+            $product->save();
+
             $notification = [
                 'message' => 'Purchase Added Successfully.',
                 'alert-type' => 'success'
@@ -104,6 +109,7 @@ class PurchaseRepository implements PurchaseInterface
                 }
             }
 
+            $purchase = Purchase::findOrFail($id);
 
             Purchase::findOrFail($id)->update([
                 'product_id' => $request->productId,
@@ -115,6 +121,13 @@ class PurchaseRepository implements PurchaseInterface
                 'image' => $saveUrl,
                 'created_at' => Carbon::now()
             ]);
+
+            if ($request->qty) {
+                $product = Product::findOrFail($request->productId);
+                $productQty = ($product->qty - $purchase->qty) + $request->qty;
+                $product->qty = $productQty;
+                $product->save();
+            }
 
             $notification = [
                 'message' => 'Purchase Updated Successfully.',
@@ -134,11 +147,16 @@ class PurchaseRepository implements PurchaseInterface
     public function deletePurchase($id)
     {
         try {
-            $purchaseImg =  Purchase::findOrFail($id);
-            if ($purchaseImg->image) {
-                unlink($purchaseImg->image);
+            $purchase =  Purchase::findOrFail($id);
+            if ($purchase->image) {
+                unlink($purchase->image);
             }
-            $purchaseImg->delete();
+            $purchase->delete();
+
+            $product = Product::findOrFail($purchase->product_id);
+            $productQty = $product->qty - $purchase->qty;
+            $product->qty = $productQty;
+            $product->save();
 
             $notification = [
                 'message' => 'Purchase Deleted Successfully.',

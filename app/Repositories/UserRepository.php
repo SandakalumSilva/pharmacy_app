@@ -147,4 +147,69 @@ class UserRepository implements UserInterface
             return redirect()->back()->with($notification);
         }
     }
+
+    public function profileUser($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            return view('users.user', compact('user'));
+        } catch (\Exception $e) {
+            $notification = [
+                'message' => $e->getMessage(),
+                'alert-type' => 'error'
+            ];
+            return redirect()->back()->with($notification);
+        }
+    }
+
+    public function changePassword($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            return view('users.change_password', compact('user'));
+        } catch (\Exception $e) {
+            $notification = [
+                'message' => $e->getMessage(),
+                'alert-type' => 'error'
+            ];
+            return redirect()->back()->with($notification);
+        }
+    }
+
+    public function updatePassword($request)
+    {
+        try {
+            $request->validate([
+                'currentPassword' => ['required'],
+                'password' => ['required', 'min:8', 'confirmed']
+            ]);
+
+            if (!Hash::check($request->currentPassword, Auth::user()->password)) {
+                $notification = [
+                    'message' => 'Current password is incorrect',
+                    'alert-type' => 'error'
+                ];
+                return back()->with($notification);
+            }
+
+            $id = $request->id;
+
+            User::findOrFail($id)->update([
+                'password' => Hash::make($request->password)
+            ]);
+
+            $notification = [
+                'message' => 'Password Change Successfully.',
+                'alert-type' => 'success'
+            ];
+
+            return redirect()->route('all.users')->with($notification);
+        } catch (\Exception $e) {
+            $notification = [
+                'message' => $e->getMessage(),
+                'alert-type' => 'error'
+            ];
+            return redirect()->back()->with($notification);
+        }
+    }
 }
