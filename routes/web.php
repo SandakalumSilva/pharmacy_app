@@ -4,8 +4,10 @@ use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\ExpenseController;
 use App\Http\Controllers\backend\ProductController;
 use App\Http\Controllers\backend\PurchaseController;
+use App\Http\Controllers\backend\SalesController;
 use App\Http\Controllers\backend\StockController;
 use App\Http\Controllers\backend\SupplierController;
+use App\Http\Controllers\pos\PosController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -95,8 +97,26 @@ Route::controller(UserController::class)->group(function () {
         Route::get('/all/users', 'allUsers')->name('all.users');
         Route::get('/add/user', 'addUser')->name('add.user');
         Route::post('/store/user', 'storeUser')->name('store.user');
-        Route::get('/edit/user/{id}','editUser')->name('edit.user');
-        Route::post('/update/user','updateUser')->name('update.user');
+        Route::get('/edit/user/{id}', 'editUser')->name('edit.user');
+        Route::post('/update/user', 'updateUser')->name('update.user');
         Route::get('/delete/user/{id}', 'deleteUser')->name('delete.user');
+
+        Route::get('/profile/user/{id}', 'profileUser')->name('profile.user');
+        Route::get('/change/password/{id}', 'changePassword')->name('change.password');
+        Route::post('/update/password', 'updatePassword')->name('update.password');
+    });
+});
+
+Route::controller(PosController::class)->group(function () {
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/pos', 'pos')->name('pos');
+        Route::post('/add/cart/{id}', 'addCart')->name('add.cart');
+        Route::get('/delete/cart/{id}', 'deleteCart')->name('delete.cart');
+    });
+});
+
+Route::controller(SalesController::class)->group(function () {
+    Route::middleware(['auth'])->group(function () {
+        Route::post('purchase', 'purchase')->name('purchase');
     });
 });
