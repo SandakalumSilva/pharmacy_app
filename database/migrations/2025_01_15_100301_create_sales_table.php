@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->string('amount');
+            $table->string('inv_no');
+            $table->string('payement_method')->default(1);
+            $table->string('sub_total');
+            $table->string('discount')->nullable();
+            $table->string('total');
             $table->timestamps();
         });
     }

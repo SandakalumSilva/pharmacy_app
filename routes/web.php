@@ -118,5 +118,12 @@ Route::controller(PosController::class)->group(function () {
 Route::controller(SalesController::class)->group(function () {
     Route::middleware(['auth'])->group(function () {
         Route::post('purchase', 'purchase')->name('purchase');
+        Route::get('invoice/generate/{id}', 'invoiceGenerate')->name('invoice.generate');
+        Route::get('/invoice/print/{id}', 'invoicePrint')->name('invoice.print');
+        Route::get('/all/sales', 'allSales')->name('all.sales');
+        Route::get('/delete/invoice/{id}', 'deleteInvoice')->name('delete.invoice');
+        Route::get('/deleted/sales', 'deletedSales')->name('deleted.sales');
+        Route::get('/deleted/invoice/{id}', 'deletedInvoice')->name('deleted.invoice');
+        Route::get('/deleted/invoice/delete/{id}', 'deletedInvoiceDelete')->name('deleted.invoice.delete');
     });
 });

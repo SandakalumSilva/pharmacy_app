@@ -14,7 +14,39 @@ class SalesController extends Controller
         $this->salesRepository = $salesRepository;
     }
 
-    public function purchase(Request $request){
+    public function purchase(Request $request)
+    {
         return $this->salesRepository->purchase($request);
+    }
+
+    public function invoiceGenerate($id)
+    {
+        return $this->salesRepository->invoiceGenerate($id);
+    }
+
+    public function invoicePrint($id)
+    {
+        return $this->salesRepository->invoicePrint($id);
+    }
+
+    public function allSales()
+    {
+        return $this->salesRepository->allSales();
+    }
+
+    public function deleteInvoice($id)
+    {
+        return $this->salesRepository->deleteInvoice($id);
+    }
+    public function deletedSales(){
+        return $this->salesRepository->deletedSales();
+    }
+
+    public function deletedInvoice($id){
+        return $this->salesRepository->deletedInvoice($id);
+    }
+
+    public function deletedInvoiceDelete($id){
+        return $this->salesRepository->deletedInvoiceDelete($id);
     }
 }

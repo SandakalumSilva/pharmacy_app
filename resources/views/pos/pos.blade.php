@@ -1,5 +1,11 @@
 @extends('index')
 @section('content')
+    <style>
+        .table_scroll {
+            height: 400px;
+            overflow-y: scroll;
+        }
+    </style>
     <div class="section-header">
         <h1>POS</h1>
 
@@ -8,7 +14,7 @@
 
         <div class="row mt-sm-4">
             <div class="col-12 col-md-12 col-lg-6">
-                <div class="card p-0">
+                <div class="card p-0 table_scroll">
                     <h3 class="m-3">Purchase Products</h3>
                     <div class="table-responsive">
                         <table class="table table-striped table-md">
@@ -45,17 +51,17 @@
                                 </td>
                                 <td></td>
                                 <td></td>
-                                <td>{{ number_format($totalAmount, 2) }}</td>
+                                <td><b>{{ number_format($totalAmount, 2) }}</b></td>
                             </tr>
                         </table>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-12 col-lg-6">
-                <div class="card p-0">
+                <div class="card p-0 table_scroll">
                     <h3 class="m-3">All Products</h3>
                     <div class="table-responsive">
-                        <table class="table table-striped table-md" id="table-1">
+                        <table class="table table-striped table-md " id="table-1">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -93,15 +99,42 @@
                 <div class="card">
                     <form action="{{ route('purchase') }}" method="POST">
                         @csrf
-                        <div class="row">
+                        <div class="row m-1">
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Full Amount</label>
-                                    <input type="number" value="{{ number_format($totalAmount, 2) }}" id="fullAmount"
-                                        name="fullAmount" readonly class="form-control">
+                                    <label>Sub Total</label>
+                                    <input type="number" value="{{ number_format($totalAmount, 2) }}" id="subTotal"
+                                        name="subTotal" readonly class="form-control">
                                 </div>
                             </div>
 
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Discount</label>
+                                    <input type="number" min="1" placeholder="00.00" value="{{ old('payAmount') }}"
+                                        id="discount" name="discount" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Total</label>
+                                    <input type="number" placeholder="00.00" value="{{ number_format($totalAmount, 2) }}"
+                                        id="total" readonly name="total" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-1">
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Payment Method</label>
+                                    <select class="form-control select2" name="paymentMethod">
+                                        <option value="1">Cash</option>
+                                        <option value="2">Debit/Credit Card</option>
+
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Pay Amount</label>
@@ -120,7 +153,7 @@
                         </div>
 
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary m-2" id="payButton" type="submit" disabled>Paymeent</button>
+                            <button class="btn btn-primary m-2" id="payButton" type="submit" disabled>Payment</button>
                         </div>
                     </form>
                 </div>
@@ -128,12 +161,19 @@
         </div>
     </div>
     <script>
+        $('#discount').keyup(function(e) {
+            let discount = $('#discount').val();
+            let subTotal = $('#subTotal').val();
+            let total = subTotal - ((subTotal * discount) / 100);
+            $('#total').val(total);
+        });
+
         $('#payAmount').keyup(function(event) {
-            var fullAmount = $('#fullAmount').val();
-            var payAmount = $('#payAmount').val();
-            var balance = payAmount - fullAmount;
+            let total = $('#total').val();
+            let payAmount = $('#payAmount').val();
+            let balance = payAmount - total;
             $('#balance').val(balance.toFixed(2));
-            if (balance >= 0) {
+            if (balance >= 0 && total != 0) {
                 $('#payButton').attr('disabled', false);
             }
         });
