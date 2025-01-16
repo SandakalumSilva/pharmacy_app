@@ -71,6 +71,17 @@
 
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
+                    <span>Sales</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="{{ route('all.sales') }}">All Sales</a></li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="{{ route('deleted.sales') }}">Deleted Sales</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Users</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="{{ route('all.users') }}">All Users</a></li>
