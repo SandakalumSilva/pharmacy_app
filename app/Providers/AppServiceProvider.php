@@ -10,6 +10,7 @@ use App\Interfaces\Backend\SalesInterface;
 use App\Interfaces\Backend\StockInterface;
 use App\Interfaces\Backend\SupplierInterface;
 use App\Interfaces\Pos\PosInterface;
+use App\Interfaces\RoleInterface;
 use App\Interfaces\UserInterface;
 use App\Repositories\Backend\CategoryRepositoy;
 use App\Repositories\Backend\ExpenseRepository;
@@ -19,6 +20,7 @@ use App\Repositories\Backend\SalesRepository;
 use App\Repositories\Backend\StockRepository;
 use App\Repositories\Backend\SupplierRepository;
 use App\Repositories\Pos\PosRepository;
+use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -38,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserInterface::class, UserRepository::class);
         $this->app->bind(PosInterface::class, PosRepository::class);
         $this->app->bind(SalesInterface::class, SalesRepository::class);
+        $this->app->bind(RoleInterface::class, RoleRepository::class);
     }
 
     /**
